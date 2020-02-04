@@ -21,9 +21,22 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+legacy: &legacy
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  migrations_paths: db/legacy_migrate
+
 development:
-  <<: *default
-  database: scenic_test_development
+  primary:
+    <<: *default
+    database: scenic_test_development
+
+  legacy:
+    <<: *legacy
+    database: scenic_legacy_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -56,8 +69,13 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: scenic_test_test
+  primary:
+    <<: *default
+    database: scenic_test_test
+
+  legacy:
+    <<: *legacy
+    database: scenic_legacy_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -79,7 +97,14 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: scenic_test_production
-  username: scenic_test
-  password: <%= ENV['SCENIC_TEST_DATABASE_PASSWORD'] %>
+  primary:
+    <<: *default
+    database: scenic_test_production
+    username: scenic_test
+    password: <%= ENV['SCENIC_TEST_DATABASE_PASSWORD'] %>
+
+  legacy:
+    <<: *legacy
+    database: scenic_legacy_production
+    username: scenic_legacy
+    password: <%= ENV['SCENIC_LEGACY_DATABASE_PASSWORD'] %>
