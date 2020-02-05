@@ -76,3 +76,7 @@ module Scenic
 end
 
 Scenic.configuration = Scenic::NewConfiguration.new
+
+Scenic.configure do |config|
+  config.add_adapter(name: "mysql2", instance: Scenic::Adapters::MySQL.new)
+end
