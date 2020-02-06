@@ -21,6 +21,8 @@ The repository includes branch heads at the following points:
   On this branch the `legacy` database has been switched to MySQL.
   This causes Scenic to fail when the `schema.rb` file for the legacy
   database is being generated, even when it contains no views.
+  I've filed a [GitHub issue](https://github.com/scenic-views/scenic/issues/291)
+  for this.
 
 * [pg-mysql-fix](https://github.com/mhw/scenic-multiple-database/tree/pg-mysql-fix):
   This branch adds an
